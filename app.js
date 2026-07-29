@@ -3,14 +3,20 @@ const express = require("express");
 const app = express();
 const tasks = require("./routes/tasks");
 const connectDB = require("./db/connect");
+const notFound = require('./middlewares/not-found');
+const errorHandlerMiddleWare = require('./middlewares/error-handler');
 require('dotenv').config();
 // middleware
 
 app.use(express.json());
 
+
 //routes
 
 app.use("/api/v1/tasks", tasks);
+
+app.use(notFound);
+app.use(errorHandlerMiddleWare);
 
 const PORT = 3000;
 
@@ -24,3 +30,4 @@ const start = async () => {
 };
 
 start();
+
